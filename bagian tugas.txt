@@ -1,0 +1,14 @@
+MINGGU 1
+
+Nathan :
+Membuat repository GitHub kelompok.
+Mengumpulkan screenshot hasil deployment.
+
+Pandu :
+Install wordpress
+
+Leuna :
+membuat container MariaDB
+
+Zidan :
+Membuat custom Docker Network
