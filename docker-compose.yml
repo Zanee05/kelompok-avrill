@@ -16,6 +16,7 @@ services:
     networks:
       - backend-net
 
+
   wordpress:
     image: wordpress:latest
     container_name: wordpress
@@ -39,9 +40,43 @@ services:
       - frontend-net
       - backend-net
 
+
+  # TAMBAHAN MINGGU 2
+  redis:
+    image: redis:alpine
+    container_name: redis
+
+    networks:
+      - backend-net
+
+
+  # TAMBAHAN MINGGU 2
+  minio:
+    image: minio/minio
+    container_name: minio
+
+    command: server /data --console-address ":9001"
+
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minio12345
+
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+
+    volumes:
+      - minio_data:/data
+
+    networks:
+      - backend-net
+
+
 volumes:
   db_data:
   wordpress_data:
+  minio_data:
+
 
 networks:
   frontend-net:
