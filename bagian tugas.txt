@@ -12,3 +12,24 @@ membuat container MariaDB
 
 Zidan :
 Membuat custom Docker Network
+
+Minggu 2
+
+Nathan :
+Menguji performa sebelum/sesudah Redis.
+Mengumpulkan screenshot.
+Update GitHub.
+
+Pandu :
+Menyiapkan Object Storage.
+Membuat bucket.
+Menghubungkan WordPress ke MinIO.
+Menguji upload media.
+
+Leuna :
+Menghubungkan Redis dengan WordPress.
+Install plugin Redis Object Cache.
+
+Zidan :
+Menambahkan service Redis dan MinIO ke docker-compose.yml.
+Memastikan semua container berjalan.
