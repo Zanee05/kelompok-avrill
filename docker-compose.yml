@@ -39,18 +39,14 @@ services:
     networks:
       - frontend-net
       - backend-net
-
-
-  # TAMBAHAN MINGGU 2
+      
   redis:
     image: redis:alpine
     container_name: redis
 
     networks:
       - backend-net
-
-
-  # TAMBAHAN MINGGU 2
+      
   minio:
     image: minio/minio
     container_name: minio
