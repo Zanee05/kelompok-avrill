@@ -33,3 +33,20 @@ Install plugin Redis Object Cache.
 Zidan :
 Menambahkan service Redis dan MinIO ke docker-compose.yml.
 Memastikan semua container berjalan.
+
+Minggu 3:
+
+Nathan :
+Membuat file .env
+Update repository github
+
+Pandu :
+Memastikan credential tidak hardcode
+
+
+Leuna :
+Memastikan fitur Minggu 2 tetap berjalan setelah finalisasi.
+
+Zidan :
+Melakukan pengujian akhir semua service
+
