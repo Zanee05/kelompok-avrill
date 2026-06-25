@@ -1,14 +1,14 @@
 services:
-
   db:
     image: mariadb:11
     container_name: mariadb
+    restart: unless-stopped
 
     environment:
-      MYSQL_ROOT_PASSWORD: root123
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wpuser
-      MYSQL_PASSWORD: wppassword
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 
     volumes:
       - db_data:/var/lib/mysql
@@ -16,22 +16,27 @@ services:
     networks:
       - backend-net
 
-
   wordpress:
     image: wordpress:latest
     container_name: wordpress
+    restart: unless-stopped
 
     depends_on:
       - db
+      - redis
 
     ports:
       - "8080:80"
 
     environment:
       WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_USER: wpuser
-      WORDPRESS_DB_PASSWORD: wppassword
-      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+
+      # Redis Configuration
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_REDIS_HOST', 'redis');
 
     volumes:
       - wordpress_data:/var/www/html
@@ -39,23 +44,27 @@ services:
     networks:
       - frontend-net
       - backend-net
-      
+
+
   redis:
     image: redis:alpine
     container_name: redis
+    restart: unless-stopped
 
     networks:
       - backend-net
-      
+
+
   minio:
     image: minio/minio
     container_name: minio
+    restart: unless-stopped
 
     command: server /data --console-address ":9001"
 
     environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minio12345
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
 
     ports:
       - "9000:9000"
@@ -65,15 +74,28 @@ services:
       - minio_data:/data
 
     networks:
-      - backend-net
+      - storage-net
 
 
 volumes:
+
   db_data:
+    driver: local
+
   wordpress_data:
+    driver: local
+
   minio_data:
+    driver: local
 
 
 networks:
+
   frontend-net:
+    driver: bridge
+
   backend-net:
+    driver: bridge
+
+  storage-net:
+    driver: bridge
