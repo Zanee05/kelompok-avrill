@@ -74,6 +74,7 @@ services:
       - minio_data:/data
 
     networks:
+      - backend-net
       - storage-net
 
 
